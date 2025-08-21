@@ -6,15 +6,25 @@ This folder is for preparing and processing inputs to the **pretrained rhetorica
 ## Usage
 
 1. **Prepare sentences**  
+
    Run the helper script to split judgments into sentences:
 
    ```bash
    python prepare_sentences.py
    ```
-This generates sentences.txt with one sentence per line.
+   This generates sentences.txt with one sentence per line.
 
 2. Run rhetorical role labelling
-Follow the instructions in the [semantic-segmentation repo](https://github.com/Law-AI/semantic-segmentation) to perform inference with the pretrained variant of the Hier-BiLSTM-CRF model, using sentences.txt as input.
+   
+   Follow the instructions in the [semantic-segmentation repo](https://github.com/Law-AI/semantic-segmentation) to perform inference with the       pretrained variant of the Hier-BiLSTM-CRF model, using sentences.txt as input.
 
-3. Postprocess output (optional)
-After inference, you can convert the raw output into a CSV.
+3. Postprocess output
+
+   After inference, we map the predicted labels back to the sentences. Run the postprocessing script to generate a new .csv file where each sentence is annotated with its rhetorical role.
+
+   ```bash
+   python map_roles.py
+   ```
+
+   
+
