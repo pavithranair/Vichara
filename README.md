@@ -11,7 +11,7 @@ Contains modules for evaluating the performance of predictions and explanations.
 
 - **`explanations/`**
   - `lexical_evaluation.py` – Evaluates explanations based on lexical similarity metrics(ROUGE-1, ROUGE-2, ROUGE-L, BLEU, METEOR).
-  - `semantic_evaluation.py` – Evaluates explanations based on semantic similarity metrics(BERTScore, and BLANC).
+  - `semantic_evaluation.py` – Evaluates explanations based on semantic similarity metrics(BERTScore and BLANC).
 - `evaluate_prediction.py` – Combines different evaluation metrics to assess prediction and explanation quality(accuracy, precision, recall, F1-score).
 
 ### `modules/`
@@ -31,3 +31,4 @@ Contains the core modules of the framework.
 Contains utility scripts.
 
 - `prompts.py` – Contains prompt templates used for LLM-based tasks.
+
