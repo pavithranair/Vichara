@@ -14,7 +14,6 @@ Given the following facts from an appeal case document, extract the following in
 
 - Do NOT assume the appellant is the party introduced first. Carefully check who has filed the current appeal.
 - Do NOT summarize or include opinions or findings of lower courts unless those are being specifically challenged in this appeal.
-- Do NOT list courts or tribunals unless they are explicitly a party.
 - Focus on the actual parties to the legal dispute.
 - Do NOT invent names or facts. If something is not mentioned, leave it as an empty string.
 - Use only the output format specified below.
@@ -36,7 +35,7 @@ Given the following facts from an appeal case document, extract the following in
 
 # Prompt for extracting decision points
 decision_point_prompt = """You are a legal assistant tasked with extracting **all decision points** from an excerpt of a court case proceeding. 
-A decision point summarizes a legal issue along with the Court’s stance on it. 
+Decision points are discrete legal determinations made at different stages throughout the case.
 
 Given the following text and the present court, extract **all identifiable decision points** and output them in strict JSON format as a list of objects.
 
@@ -54,9 +53,6 @@ Each decision point object should include:
 - Do not assume or hallucinate decision makers.
 - Do NOT include triple backticks (```) anywhere.
 
-### Input
-Present Court: "{present_court}"
-
 ### Output Format
 
 [
@@ -70,15 +66,14 @@ Present Court: "{present_court}"
   }}
 ]
 
-Text:
-\"\"\"{group_text}\"\"\"
+### Input
+Present Court: "{present_court}"
+Text: \"\"\"{group_text}\"\"\"
 """
 
 # Prompt for generating the present court's final ruling
 final_ruling_prompt = """
 Your goal is to identify the **final ruling of the present court** in this appeal — that is, what the present court ultimately decided and ordered.
-
----
 
 ### Case Context:
 
@@ -90,14 +85,14 @@ Below is the context of the case, which clearly identifies:
 - Respondent's Stance (in the current appeal) – What the respondent is arguing for or seeking **in the present appeal**
 - Present Court – the court deciding the present appeal.
 
-Please pay close attention to this information — it overrides any assumptions you might make from the decision points. If the appellants, respondents or the issue of the appeal are not mentioned in the context, ONLY then infer these from the decision points.
+Please pay close attention to this information, it overrides any assumptions you might make from the decision points. If the appellants, respondents or the issue of the appeal are not mentioned in the context, ONLY then infer these from the decision points.
 
 {context}
 ---
 
 ### Decision Points:
 
-A **decision point** is any distinct legal issue or question in the case along with the court’s stance or resolution on it.  The below decision points collectively summarize the key determinations the present court made throughout the case.
+Decision points are discrete legal determinations made at different stages throughout the case. The below decision points collectively summarize the key determinations the present court made throughout the case.
 
 {present_court_points}
 ---
@@ -117,8 +112,7 @@ This section contains the last official statements or conclusions made by the pr
   - The court’s reasoning and key factors considered
   - Relevant timelines or compliance expectations
 2. Focus on the decision points to determine what the present court considered during this appeal.
-3. Most importantly, use the **Final Statements from the Present Court** to determine what the court ultimately ruled — these are the court's last and binding position.
-
+3. Use the **Final Statements from the Present Court** to determine what the court ultimately ruled. These are the court's last and binding position.
 ---
 
 ### Important:
@@ -126,7 +120,6 @@ This section contains the last official statements or conclusions made by the pr
 - Do not confuse appellants and respondents. Use the parties as stated in the case context.
 - Respond clearly and concisely.
 - Do NOT state whether the appeal was granted or dismissed. Your response should only describe the final ruling of the present court.
-
 ---
 
 ### Output Format:
@@ -138,8 +131,6 @@ Final Ruling:
 # Prompt template for judgment prediction
 judgment_prompt = """You are a legal assistant helping to analyze the outcome of an appeal. Your task is to determine whether the **present court’s final ruling** aligns with what the **appellant** was seeking in this appeal.
 
----
-
 ### Case Context:
 The context below includes:
 - Appellants: The **appellant** (party who filed the appeal)
@@ -147,25 +138,21 @@ The context below includes:
 - Issue: The **main issue**
 - Appellant's Stance: What the **appellant is seeking** in the current appeal
 - Respondent's Stance: What the **respondent is seeking** in the current appeal
-- Present Court: The court currently deciding the present appeal.
+- Present Court: The court deciding the present appeal.
 
 {context}
-
 ---
 
 ### Final Court Ruling:
 {court_ruling}
-
 ---
 
 ### Your Task:
 - If the **court fully or partially granted what the appellant was seeking**, output: `Prediction: 1`
 - If the **court did not grant what the appellant was seeking**, output: `Prediction: 0`
-
 ---
 
 ### Output Format:
-
 Prediction: <0 or 1>
 """
 
@@ -173,7 +160,7 @@ Prediction: <0 or 1>
 explanation_prompt = """You are a legal assistant. Your task is to generate a structured legal explanation for the court's predicted decision in this appeal case.
 
 You are given:
-- The **case context** including appellant, respondent, issue, and stances
+- The **case context** including appellant, respondent, issue, stances and the court deciding the appeal
 - The **final court ruling** from the present court
 - A set of **decision points** extracted from the case. A **decision point** refers to a key moment in the case where a specific issue was considered, a responsible authority or decision-maker evaluated it, and a determination or outcome was reached.
 - The **predicted outcome** of the appeal
