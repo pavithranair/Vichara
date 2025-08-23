@@ -2,52 +2,21 @@ import pandas as pd
 import tiktoken
 import openai
 import json
+from dotenv import load_dotenv
+import os
+from utils.prompts import decision_point_prompt
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Access them using os.getenv
+api_key = os.getenv("OPENAI_API_KEY")
 
 # Initialize OpenAI client
-client = openai.OpenAI(api_key="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")
+client = openai.OpenAI(api_key=api_key)
 
 # Tokenizer for the model
 enc = tiktoken.encoding_for_model("gpt-4o-mini")
-
-# JSON prompt template
-DECISION_POINT_PROMPT = """You are a legal assistant tasked with extracting **all decision points** from an excerpt of a court case proceeding. 
-A decision point summarizes a legal issue along with the Court’s stance on it. 
-
-Given the following text and the present court, extract **all identifiable decision points** and output them in strict JSON format as a list of objects.
-
-Each decision point object should include:
-
-- "issue": the legal issue or question being addressed
-- "decision_maker": the court or authority that made the decision (e.g., Supreme Court, Trial Court, High Court)
-- "outcome": the result or resolution of the issue
-- "time": (optional) the date or timeframe of the decision if mentioned
-- "reasoning": (optional) summary of the Court's reasoning, including references to statutes, arguments, facts, or precedents
-- "present_court_decision": true if the "decision_maker" is the same as the present court provided, otherwise false
-
-### Important instructions:
-- Do not include any extra text or explanation.
-- Do not assume or hallucinate decision makers.
-- Do NOT include triple backticks (```) anywhere.
-
-### Input
-Present Court: "{present_court}"
-
-### Output Format
-
-[
-  {{
-    "issue": "<string>",
-    "decision_maker": "<string>",
-    "outcome": "<string>",
-    "time": "<string or null>",
-    "reasoning": "<string or null>",
-    "present_court_decision": <true or false>
-  }}
-]
-
-Text:
-\"\"\"{group_text}\"\"\"
-"""
 
 def extract_decision_points(text, present_court, chunk_size=1000):
     """
@@ -60,7 +29,7 @@ def extract_decision_points(text, present_court, chunk_size=1000):
     for i in range(0, len(tokens), chunk_size):
         chunk = enc.decode(tokens[i:i+chunk_size])
         
-        prompt = DECISION_POINT_PROMPT.format(group_text=chunk, present_court=present_court)
+        prompt = decision_point_prompt.format(group_text=chunk, present_court=present_court)
         
         response = client.chat.completions.create(
             model="gpt-4o-mini",
@@ -113,4 +82,4 @@ df = pd.read_csv("cases_with_context.csv")
 df = process_dataframe(df, text_column="Input", court_column="Present_Court")
 
 # Save results
-df.to_csv("decision_points_json.csv", index=False)
+df.to_csv("decision_points.csv", index=False)

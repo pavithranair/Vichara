@@ -1,6 +1,6 @@
 # Rhetorical Role Labelling
 
-This folder is for preparing and processing inputs to the **pretrained rhetorical role classifier** provided in the [Law-AI Semantic Segmentation repository](https://github.com/Law-AI/semantic-segmentation).
+This folder is for preparing and processing inputs to the pretrained rhetorical role classifier provided in the [Law-AI Semantic Segmentation repository](https://github.com/Law-AI/semantic-segmentation).
 
 ---
 ## Usage
@@ -14,11 +14,11 @@ This folder is for preparing and processing inputs to the **pretrained rhetorica
    ```
    This generates sentences.txt with one sentence per line.
 
-2. Run rhetorical role labelling
+2. **Run rhetorical role labelling**
    
    Follow the instructions in the [semantic-segmentation repo](https://github.com/Law-AI/semantic-segmentation) to perform inference with the       pretrained variant of the Hier-BiLSTM-CRF model, using sentences.txt as input.
 
-3. Postprocess output
+3. **Postprocess output**
 
    After inference, we map the predicted labels back to the sentences. Run the postprocessing script to generate a new .csv file where each sentence is annotated with its rhetorical role.
 
