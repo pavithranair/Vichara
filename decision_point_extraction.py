@@ -33,7 +33,7 @@ Text to analyze:
 \"\"\"{group_text}\"\"\"
 """
 
-def extract_decision_points(text, chunk_size=1000):
+def extract_decision_points(text, chunk_size=500):
     """
     Splits the text into chunks of 'chunk_size' tokens, 
     sends each to GPT, and returns concatenated decision points.
@@ -51,11 +51,12 @@ def extract_decision_points(text, chunk_size=1000):
             messages=[{"role": "user", "content": prompt}],
             temperature=0
         )
+        print(response.choices[0].message.content.strip())
         outputs.append(response.choices[0].message.content.strip())
 
     return "\n\n".join(outputs)
 
-def process_dataframe(df, text_column="text"):
+def process_dataframe(df, text_column="Input"):
     """
     Processes a DataFrame row by row to extract decision points.
     """
@@ -69,10 +70,10 @@ def process_dataframe(df, text_column="text"):
     return df
 
 # Load your data
-df = pd.read_csv("ILDC_sentences_annotated.csv")   
+df = pd.read_csv("cases_with_context.csv")   
 
 # Process row by row
-df = process_dataframe(df, text_column="text")
+df = process_dataframe(df, text_column="Input")
 
 # Save results
 df.to_csv("decision_points.csv", index=False)

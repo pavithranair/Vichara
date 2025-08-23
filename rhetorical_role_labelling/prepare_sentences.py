@@ -6,7 +6,7 @@ from wtpsplit import SaT
 sat_lora_distinct = SaT("sat-12l", style_or_domain="legal-judgement", language="en")
 
 # Load input CSV
-df = pd.read_csv("~/Projects/Legal/Datasets/ILDC_expert.csv")
+df = pd.read_csv("~/Projects/Legal/Datasets/predex_10.csv")
 
 def process_text(text, row_idx=None):
     """
@@ -30,12 +30,12 @@ def process_text(text, row_idx=None):
 
 # Apply sentence splitting row-by-row on the "text" column
 df["Sentences"] = df.apply(
-    lambda row: json.dumps(process_text(row["text"], row.name), ensure_ascii=False),
+    lambda row: json.dumps(process_text(row["Input"], row.name), ensure_ascii=False),
     axis=1
 )
 
 # Save CSV with sentences as JSON lists
-df.to_csv("ILDC_sentences_split.csv", index=False)
+df.to_csv("predex_sentences_split.csv", index=False)
 
 # Flatten all sentences into one .txt file to feed as input to Hier-BiLSTM-CRF model for rhetorical role labelling
 output_file = "sentences.txt"

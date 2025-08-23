@@ -2,7 +2,7 @@ import pandas as pd
 import ast
 
 # Load the CSV with sentences already split
-df = pd.read_csv("ILDC_sentences_split.csv")
+df = pd.read_csv("predex_sentences_split.csv")
 
 # Read predicted labels from predictions.txt (output from rhetorical role labelling)
 with open("predictions.txt", "r", encoding="utf-8") as f:
@@ -40,6 +40,6 @@ for sentence_list_str in df["Sentences"]:
 df["Labeled_Sentences"] = labeled_sentences_col
 
 # Save back to CSV
-df.to_csv("ILDC_sentences_annotated.csv", index=False)
+df.to_csv("predex_sentences_annotated.csv", index=False)
 
 print("Annotated CSV written!")
