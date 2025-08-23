@@ -8,7 +8,7 @@ Given the following facts from an appeal case document, extract the following in
 3. Issue – the main legal or factual issue being disputed in the current appeal.
 4. Appellant's Stance (in the current appeal) – clearly state what the appellant is arguing for or seeking in the present appeal.
 5. Respondent's Stance (in the current appeal) – clearly state what the respondent is arguing for or seeking in the present appeal.
-6. Present Court – the court currently deciding the present appeal (e.g., Supreme Court of India, High Court of Bombay).
+6. Present Court – the court deciding the present appeal (e.g., Supreme Court of India, High Court of Bombay).
 
 ### Important instructions:
 
@@ -88,7 +88,7 @@ Below is the context of the case, which clearly identifies:
 - What the **main issue** of the appeal is.
 - Appellant's Stance (in the current appeal) – What the appellant is arguing for or seeking **in the present appeal**
 - Respondent's Stance (in the current appeal) – What the respondent is arguing for or seeking **in the present appeal**
-- Present Court – the court currently deciding the present appeal.
+- Present Court – the court deciding the present appeal.
 
 Please pay close attention to this information — it overrides any assumptions you might make from the decision points. If the appellants, respondents or the issue of the appeal are not mentioned in the context, ONLY then infer these from the decision points.
 
