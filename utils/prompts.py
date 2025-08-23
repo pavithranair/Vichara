@@ -53,7 +53,7 @@ Each decision point object should include:
 - Do not assume or hallucinate decision makers.
 - Do NOT include triple backticks (```) anywhere.
 
-### Output Format
+### Output Format:
 
 [
   {{
@@ -66,7 +66,7 @@ Each decision point object should include:
   }}
 ]
 
-### Input
+### Input:
 Present Court: "{present_court}"
 Text: \"\"\"{group_text}\"\"\"
 """
