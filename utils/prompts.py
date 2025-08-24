@@ -78,8 +78,8 @@ Your goal is to identify the **final ruling of the present court** in this appea
 ### Case Context:
 
 Below is the context of the case, which clearly identifies:
-- Who the **appellant** is (the party who filed the appeal),
-- Who the **respondent** is (the party defending against the appeal), and
+- Who the **appellant** is (the party who filed the appeal)
+- Who the **respondent** is (the party defending against the appeal)
 - What the **main issue** of the appeal is.
 - Appellant's Stance (in the current appeal) – What the appellant is arguing for or seeking **in the present appeal**
 - Respondent's Stance (in the current appeal) – What the respondent is arguing for or seeking **in the present appeal**
